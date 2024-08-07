@@ -4,7 +4,6 @@ metadata:
   name: frontend-deploy
   labels:
     app: frontend
-
 spec:
   replicas: 4
   template:
