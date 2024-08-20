@@ -1,23 +1,58 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-deploy
+  name: httpd
   labels:
-    app: frontend
+    app: httpd
+    environment: development
 spec:
-  replicas: 4
-  template:
-    metadata:
-      name: pod-my-nginx
-      labels:
-        env: production
-    spec:
-      containers:
-      - name: my-container-nginx
-        image: nginx:1.14.2 
-  
+  strategy:
+    rollingUpdate:
+      maxSurge: 10%
+      maxUnavailable: 0
+  replicas: 2
   selector:
     matchLabels:
-      env: production
-  strategy:
-    type: Recreate
+      app: httpd
+  template:
+    metadata:
+      labels:
+        app: httpd
+        environment: development
+      name: pod-my-nginx
+    spec:
+      containers:
+      - name: httpd
+        image: httpd
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512M
+          limits:
+            cpu: 10
+            memory: 819M
+  
+  
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: frontend-deploy
+#   labels:
+#     app: frontend
+# spec:
+#   replicas: 4
+#   template:
+#     metadata:
+#       name: pod-my-nginx
+#       labels:
+#         env: production
+#     spec:
+#       containers:
+#       - name: my-container-nginx
+#         image: nginx:1.14.2 
+  
+#   selector:
+#     matchLabels:
+#       env: production
+#   strategy:
+#     type: Recreate
