@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+      nodeSelector:
+        kubernetes.io/hostname: worker-1
+        
+# por que usar daemonset
+# coletar logs de um determinado diretório dentro do node
+# o deploy vai ser distribuido um cada node
