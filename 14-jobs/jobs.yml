@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: echo-command
+spec:
+  template:
+    spec:
+      containers:
+      - name: sleep
+        image: alpine
+        command: 
+          - echo
+          - "Teste de job no kubernetes"
+      restartPolicy: "OnFailure"
+  ttlSecondAfterFinished: 0
