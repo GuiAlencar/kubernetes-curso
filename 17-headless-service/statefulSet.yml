@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  serviceName: nginx
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        volumeMounts:
+          - name: nginx-html
+            mountPath: "/usr/share/nginx/html"
+
+  volumeClaimTemplates:
+    - metadata:
+        name: nginx-html
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1G
+    
+# deployment controlado
+# nomes, vai criar nginx-0, nginx-1, nginx-2
+# volume por pod pvc em cada pod

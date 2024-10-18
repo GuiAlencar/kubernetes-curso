@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-blue
+  name: nginx-blue
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: nginx-blue
+  template:
+    metadata:
+      labels:
+        app: nginx-blue
+    spec:
+      containers:
+      - name: ngnix
+        image: ngnix
+        imagePullPolicy: Always
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-green
+  name: nginx-green
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: nginx-green
+  template:
+    metadata:
+      labels:
+        app: nginx-green
+    spec:
+      containers:
+      - name: httpd
+        image: httpd
+        imagePullPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  selector:
+    app: nginx-blue  
+  ports:
+  - port: 80
+  type: ClusterIP
