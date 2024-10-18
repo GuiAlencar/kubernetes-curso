@@ -56,4 +56,6 @@ spec:
   type: ClusterIP
 
 # COMANDO PARA TESTAR
+# k run --image alpine -it demo sh
+# se já existir o pod -> k exec -it demo -- sh
 # while true; do curl -I nginx 2> /dev/null |grep Server; sleep 1; done
