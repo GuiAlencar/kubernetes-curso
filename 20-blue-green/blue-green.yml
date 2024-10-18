@@ -15,8 +15,8 @@ spec:
         app: nginx-blue
     spec:
       containers:
-      - name: ngnix
-        image: ngnix
+      - name: nginx
+        image: nginx
         imagePullPolicy: Always
 
 ---
@@ -50,7 +50,10 @@ metadata:
   name: nginx
 spec:
   selector:
-    app: nginx-blue  
+    app: nginx-green
   ports:
   - port: 80
   type: ClusterIP
+
+# COMANDO PARA TESTAR
+# while true; do curl -I nginx 2> /dev/null |grep Server; sleep 1; done
